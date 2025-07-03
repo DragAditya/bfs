@@ -27,7 +27,7 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Plus+Jakarta+Sans:wght@200..800&family=JetBrains+Mono:wght@400;500;600&family=Geist:wght@100..900&display=swap" rel="stylesheet">
     
     <!-- Styles -->
     <link rel="stylesheet" href="styles.css">
@@ -43,6 +43,11 @@
     
     <!-- Particle Canvas for Cursor Trail -->
     <canvas id="particleCanvas"></canvas>
+    
+    <!-- Scroll Progress Bar -->
+    <div class="scroll-progress">
+        <div class="scroll-progress-bar" id="scrollProgressBar"></div>
+    </div>
     
     <!-- Navigation -->
     <nav class="navbar" id="navbar">
@@ -90,9 +95,7 @@
             <div class="hero-content">
                 <div class="hero-intro">
                     <h1 class="hero-name">
-                        <span class="name-part">Wagh</span>
-                        <span class="name-part">Aditya</span>
-                        <span class="name-part">Rajendra</span>
+                        <span class="name-part">DragAditya</span>
                     </h1>
                     <div class="hero-tagline">
                         <span class="greeting" id="dynamicGreeting">Hey there! 👋</span>
@@ -101,6 +104,12 @@
                             <span class="phrase">I debug complex problems.</span>
                             <span class="phrase">I automate workflows.</span>
                             <span class="phrase">I craft AI experiences.</span>
+                            <span class="phrase">I architect cloud solutions.</span>
+                            <span class="phrase">I secure digital systems.</span>
+                            <span class="phrase">I optimize performance.</span>
+                            <span class="phrase">I innovate with Python.</span>
+                            <span class="phrase">I deploy with AWS.</span>
+                            <span class="phrase">I design seamless UX.</span>
                         </div>
                     </div>
                     <p class="hero-description">
@@ -498,39 +507,6 @@
                             </div>
                         </div>
                     </div>
-                    
-                    <div class="contact-form-container">
-                        <form class="contact-form" id="contactForm">
-                            <div class="form-group">
-                                <label for="name">Your Name</label>
-                                <input type="text" id="name" name="name" required>
-                                <div class="form-validation"></div>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label for="email">Your Email</label>
-                                <input type="email" id="email" name="email" required>
-                                <div class="form-validation"></div>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label for="subject">Subject</label>
-                                <input type="text" id="subject" name="subject" required>
-                                <div class="form-validation"></div>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label for="message">Your Message</label>
-                                <textarea id="message" name="message" rows="5" required></textarea>
-                                <div class="form-validation"></div>
-                            </div>
-                            
-                            <button type="submit" class="form-submit" data-magnetic>
-                                <span>Send Message</span>
-                                <div class="submit-bg"></div>
-                            </button>
-                        </form>
-                    </div>
                 </div>
             </div>
         </section>
@@ -541,7 +517,7 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-left">
-                    <p>&copy; 2025 Wagh Aditya Rajendra. Crafted with passion and precision.</p>
+                    <p>&copy; 2025 DragAditya. Crafted with passion and precision.</p>
                 </div>
                 <div class="footer-right">
                     <div class="theme-toggle" id="themeToggle">

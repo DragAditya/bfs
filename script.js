@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
 async function initializeWebsite() {
     // Initialize all components
     initCustomCursor();
-    initParticleTrail();
+    initEnhancedParticleTrail();
     initScrollNavigation();
     initCommandPalette();
     initMobileMenu();
@@ -27,6 +27,9 @@ async function initializeWebsite() {
     initScrollAnimations();
     init3DTilt();
     initMagneticElements();
+    initScrollSnapping();
+    initDynamicTheming();
+    initPerformanceOptimizations();
     
     // Generate dynamic greeting
     await generateDynamicGreeting();
@@ -84,8 +87,8 @@ function initCustomCursor() {
     });
 }
 
-// ===== PARTICLE TRAIL ===== //
-function initParticleTrail() {
+// ===== ENHANCED PARTICLE TRAIL ===== //
+function initEnhancedParticleTrail() {
     const canvas = document.getElementById('particleCanvas');
     if (!canvas) return;
     
@@ -97,24 +100,27 @@ function initParticleTrail() {
         constructor(x, y) {
             this.x = x;
             this.y = y;
-            this.size = Math.random() * 2 + 1;
-            this.speedX = Math.random() * 2 - 1;
-            this.speedY = Math.random() * 2 - 1;
+            this.size = Math.random() * 1.5 + 0.5;
+            this.speedX = (Math.random() - 0.5) * 1;
+            this.speedY = (Math.random() - 0.5) * 1;
             this.life = 1;
-            this.decay = Math.random() * 0.02 + 0.01;
+            this.decay = Math.random() * 0.015 + 0.005;
+            this.color = `hsl(${Math.random() * 60 + 240}, 70%, 60%)`;
         }
         
         update() {
             this.x += this.speedX;
             this.y += this.speedY;
             this.life -= this.decay;
-            this.size *= 0.99;
+            this.size *= 0.995;
         }
         
         draw() {
             ctx.save();
-            ctx.globalAlpha = this.life;
-            ctx.fillStyle = '#8b5cf6';
+            ctx.globalAlpha = this.life * 0.8;
+            ctx.fillStyle = this.color;
+            ctx.shadowBlur = 10;
+            ctx.shadowColor = this.color;
             ctx.beginPath();
             ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
             ctx.fill();
@@ -122,11 +128,22 @@ function initParticleTrail() {
         }
     }
     
+    let lastMouseX = 0;
+    let lastMouseY = 0;
+    
     document.addEventListener('mousemove', (e) => {
-        // Only add particles occasionally for elegance
-        if (Math.random() < 0.3) {
+        const distance = Math.sqrt(
+            Math.pow(e.clientX - lastMouseX, 2) + 
+            Math.pow(e.clientY - lastMouseY, 2)
+        );
+        
+        // Only add particles when mouse is moving fast enough
+        if (distance > 5 && Math.random() < 0.2) {
             particles.push(new Particle(e.clientX, e.clientY));
         }
+        
+        lastMouseX = e.clientX;
+        lastMouseY = e.clientY;
     });
     
     function animateParticles() {
@@ -179,16 +196,26 @@ function initScrollNavigation() {
         });
     });
     
-    // Hide/show navbar on scroll
+    // Hide/show navbar on scroll + progress bar
+    const scrollProgressBar = document.getElementById('scrollProgressBar');
+    
     window.addEventListener('scroll', () => {
         if (!ticking) {
             requestAnimationFrame(() => {
                 const currentScrollY = window.scrollY;
                 
+                // Navbar hide/show
                 if (currentScrollY > lastScrollY && currentScrollY > 100) {
                     navbar.classList.add('hidden');
                 } else {
                     navbar.classList.remove('hidden');
+                }
+                
+                // Update scroll progress
+                if (scrollProgressBar) {
+                    const windowHeight = document.documentElement.scrollHeight - window.innerHeight;
+                    const scrolled = (currentScrollY / windowHeight) * 100;
+                    scrollProgressBar.style.width = Math.min(scrolled, 100) + '%';
                 }
                 
                 lastScrollY = currentScrollY;
@@ -326,11 +353,40 @@ function initRotatingPhrases() {
     
     if (phrases.length === 0) return;
     
+    // Add technical expertise rotation with smooth transitions
+    const technicalSkills = [
+        'I architect cloud solutions.',
+        'I optimize performance.',
+        'I secure digital systems.',
+        'I innovate with Python.',
+        'I deploy with AWS.',
+        'I automate workflows.',
+        'I debug complex problems.',
+        'I craft AI experiences.',
+        'I design seamless UX.',
+        'I build innovative solutions.'
+    ];
+    
+    // Enhanced rotation with staggered effects
     setInterval(() => {
-        phrases[currentIndex].classList.remove('active');
-        currentIndex = (currentIndex + 1) % phrases.length;
-        phrases[currentIndex].classList.add('active');
-    }, 3000);
+        phrases[currentIndex].style.transform = 'translateY(-100%) scale(0.9)';
+        phrases[currentIndex].style.opacity = '0';
+        
+        setTimeout(() => {
+            phrases[currentIndex].classList.remove('active');
+            currentIndex = (currentIndex + 1) % phrases.length;
+            phrases[currentIndex].classList.add('active');
+            
+            // Smooth entry animation
+            phrases[currentIndex].style.transform = 'translateY(100%) scale(0.9)';
+            phrases[currentIndex].style.opacity = '0';
+            
+            requestAnimationFrame(() => {
+                phrases[currentIndex].style.transform = 'translateY(0) scale(1)';
+                phrases[currentIndex].style.opacity = '1';
+            });
+        }, 300);
+    }, 2500);
 }
 
 // ===== DYNAMIC GREETING ===== //
@@ -749,6 +805,88 @@ function scrollToSection(sectionId) {
             block: 'start'
         });
     }
+}
+
+// ===== SCROLL SNAPPING ===== //
+function initScrollSnapping() {
+    const sections = document.querySelectorAll('section');
+    
+    // Add scroll snap to sections
+    sections.forEach(section => {
+        section.style.scrollSnapAlign = 'start';
+    });
+    
+    // Add scroll snap container to main
+    const main = document.querySelector('main');
+    if (main) {
+        main.style.scrollSnapType = 'y mandatory';
+    }
+}
+
+// ===== DYNAMIC THEMING ===== //
+function initDynamicTheming() {
+    const updateThemeByTime = () => {
+        const hour = new Date().getHours();
+        const root = document.documentElement;
+        
+        if (hour >= 6 && hour < 18) {
+            // Day theme adjustments
+            root.style.setProperty('--accent-primary', '#8b5cf6');
+            root.style.setProperty('--accent-secondary', '#06b6d4');
+        } else {
+            // Night theme adjustments  
+            root.style.setProperty('--accent-primary', '#a855f7');
+            root.style.setProperty('--accent-secondary', '#0ea5e9');
+        }
+    };
+    
+    updateThemeByTime();
+    setInterval(updateThemeByTime, 60000); // Update every minute
+}
+
+// ===== PERFORMANCE OPTIMIZATIONS ===== //
+function initPerformanceOptimizations() {
+    // Lazy load images
+    const images = document.querySelectorAll('img[data-src]');
+    const imageObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const img = entry.target;
+                img.src = img.dataset.src;
+                img.removeAttribute('data-src');
+                imageObserver.unobserve(img);
+            }
+        });
+    });
+    
+    images.forEach(img => imageObserver.observe(img));
+    
+    // Debounce resize events
+    let resizeTimeout;
+    window.addEventListener('resize', () => {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(() => {
+            // Recalculate layouts on resize
+            const particles = document.getElementById('particleCanvas');
+            if (particles) {
+                particles.width = window.innerWidth;
+                particles.height = window.innerHeight;
+            }
+        }, 250);
+    });
+    
+    // Prefetch critical resources
+    const criticalLinks = [
+        'https://fonts.googleapis.com',
+        'https://fonts.gstatic.com'
+    ];
+    
+    criticalLinks.forEach(link => {
+        const prefetchLink = document.createElement('link');
+        prefetchLink.rel = 'dns-prefetch';
+        prefetchLink.href = link;
+        document.head.appendChild(prefetchLink);
+    });
 }
 
 function debounce(func, wait) {
