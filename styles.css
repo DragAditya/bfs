@@ -1306,6 +1306,216 @@ section {
   }
 }
 
+/* ===== MODAL ENHANCEMENTS ===== */
+.project-modal-description {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  margin-bottom: var(--spacing-xl);
+  line-height: 1.6;
+}
+
+.feature-list {
+  list-style: none;
+  margin-bottom: var(--spacing-xl);
+}
+
+.feature-list li {
+  padding: var(--spacing-sm) 0;
+  color: var(--text-secondary);
+  position: relative;
+  padding-left: var(--spacing-lg);
+}
+
+.feature-list li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: var(--accent-green);
+  font-weight: bold;
+}
+
+.tech-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-xl);
+}
+
+.tech-chip {
+  padding: var(--spacing-sm) var(--spacing-md);
+  background: var(--accent-purple);
+  color: white;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.modal-actions {
+  display: flex;
+  gap: var(--spacing-md);
+  flex-wrap: wrap;
+}
+
+.modal-btn {
+  padding: var(--spacing-md) var(--spacing-lg);
+  border-radius: 8px;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all var(--transition-normal);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.modal-btn.primary {
+  background: var(--accent-purple);
+  color: white;
+}
+
+.modal-btn.primary:hover {
+  background: var(--accent-blue);
+  transform: translateY(-2px);
+}
+
+.modal-btn.secondary {
+  background: var(--glass-bg);
+  color: var(--text-primary);
+  border: 1px solid var(--glass-border);
+}
+
+.modal-btn.secondary:hover {
+  background: var(--bg-secondary);
+  transform: translateY(-2px);
+}
+
+/* ===== COMMAND PALETTE ENHANCEMENTS ===== */
+.command-item {
+  padding: var(--spacing-md) var(--spacing-lg);
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  border-radius: 8px;
+  margin: var(--spacing-xs);
+}
+
+.command-item:hover {
+  background: var(--glass-bg);
+  color: var(--accent-purple);
+}
+
+/* ===== FORM ENHANCEMENTS ===== */
+.form-validation.error {
+  color: var(--accent-pink);
+  font-size: 0.9rem;
+  margin-top: var(--spacing-xs);
+}
+
+.form-group input.valid,
+.form-group textarea.valid {
+  border-color: var(--accent-green);
+}
+
+.form-group input.invalid,
+.form-group textarea.invalid {
+  border-color: var(--accent-pink);
+}
+
+/* ===== LOADING STATES ===== */
+.loading {
+  opacity: 0;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.loaded .loading {
+  animation: none;
+  opacity: 1;
+}
+
+/* ===== FOCUS STATES FOR ACCESSIBILITY ===== */
+.using-keyboard *:focus {
+  outline: 2px solid var(--accent-purple);
+  outline-offset: 2px;
+}
+
+.using-keyboard .nav-link:focus::after {
+  width: 100%;
+}
+
+.using-keyboard .cta-primary:focus,
+.using-keyboard .cta-secondary:focus {
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.3);
+}
+
+/* ===== LIGHT THEME SUPPORT ===== */
+.light-theme {
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8fafc;
+  --bg-tertiary: #f1f5f9;
+  --text-primary: #1e293b;
+  --text-secondary: #64748b;
+  --text-muted: #94a3b8;
+  --glass-bg: rgba(255, 255, 255, 0.8);
+  --glass-border: rgba(148, 163, 184, 0.2);
+}
+
+.light-theme .cursor-dot {
+  background: var(--accent-purple);
+  mix-blend-mode: difference;
+}
+
+.light-theme .cosmic-particles {
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.05) 1px, transparent 1px);
+}
+
+.light-theme .project-image {
+  background: var(--bg-tertiary);
+}
+
+/* ===== REDUCED MOTION ===== */
+.reduced-motion * {
+  animation-duration: 0.001ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.001ms !important;
+}
+
+.reduced-motion .cursor-dot,
+.reduced-motion .cursor-outline {
+  display: none;
+}
+
+.reduced-motion #particleCanvas {
+  display: none;
+}
+
+/* ===== PRINT STYLES ===== */
+@media print {
+  * {
+    background: white !important;
+    color: black !important;
+  }
+  
+  .navbar,
+  .command-palette,
+  .cursor-dot,
+  .cursor-outline,
+  #particleCanvas,
+  .toast-container,
+  .modal-overlay {
+    display: none !important;
+  }
+  
+  .hero {
+    min-height: auto;
+    page-break-after: always;
+  }
+  
+  section {
+    page-break-inside: avoid;
+  }
+}
+
 /* ===== HIGH CONTRAST MODE ===== */
 @media (prefers-contrast: high) {
   :root {
